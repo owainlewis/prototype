@@ -1,9 +1,9 @@
-type Card {
+entity Card {
   required string pan;
   optional string nickname;
 }
 
-type User {
+entity User {
   optional  int64   id;
   required  string  name;
   required  string  email;
