@@ -1,0 +1,13 @@
+type Card {
+  required string pan;
+  optional string nickname;
+}
+
+type User {
+  optional  int64   id;
+  required  string  name;
+  required  string  email;
+  required  int32   age;
+  required  boolean active;
+  repeated  Card   cards;
+}
