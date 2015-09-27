@@ -6,7 +6,3 @@ import qualified Language.Parser as Parser
 
 class Renderable a where
     render :: a -> String
-
-
-
-
