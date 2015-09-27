@@ -48,7 +48,8 @@ parsePropertyKind :: Parser PropertyKind
 parsePropertyKind = try parseRequired <|> parseOptional <|> parseRepeated
 
 parseIntType :: Parser PropertyType
-parseIntType = string "integer" >> return Integer
+parseIntType = parser >> return Integer
+    where parser = string "integer" <|> string "int64" <|> string "int32"
 
 parseFloatType :: Parser PropertyType
 parseFloatType = string "float" >> return Float
@@ -57,7 +58,7 @@ parseStringType :: Parser PropertyType
 parseStringType = string "string" >> return String
 
 parseBooleanType :: Parser PropertyType
-parseBooleanType = string "boolean" >> return Boolean
+parseBooleanType = string "bool" >> return Bool
 
 parseRef :: Parser PropertyType
 parseRef = word >>= (\w -> return $ Ref w)
