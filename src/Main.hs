@@ -2,8 +2,7 @@
 {-# LANGUAGE OverloadedStrings  #-}
 module Main where
 
-import           System.Environment
-
+import           System.Environment(getArgs)
 import           Language.AST       (Entity (..))
 import qualified Language.Parser    as Parser
 import           Text.Parsec        (ParseError)
