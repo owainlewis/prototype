@@ -1,0 +1,5 @@
+entity User {
+  required integer id;
+  repeated Card cards;
+  optional bool active;
+}

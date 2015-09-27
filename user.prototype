@@ -1,9 +1,0 @@
-entity Card {
-  required string pan;
-  optional string nickname;
-}
-
-entity User {
-  required integer id;
-  repeated Card cards;
-}
