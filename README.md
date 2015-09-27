@@ -1,5 +1,7 @@
 # Prototype
 
+## Status (Alpha) Compiler is working
+
 Prototype is a sketch for a simple polyglot format for defining and generating models for
 services. It uses a very similar (but more restrictive) syntax to Google protocol buffers.
 

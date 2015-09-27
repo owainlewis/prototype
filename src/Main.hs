@@ -1,5 +1,5 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE OverloadedStrings  #-}
+
+{-# LANGUAGE OverloadedStrings #-}
 module Main where
 
 import           System.Environment(getArgs)
