@@ -15,6 +15,7 @@ parseFile f = do
      contents <- readFile f
      return $ Parser.parseExpr contents
 
+main :: IO ()
 main = do
     args <- getArgs
     case args of
