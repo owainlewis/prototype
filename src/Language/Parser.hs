@@ -1,11 +1,16 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Language.Compiler where
+module Language.Parser where
 
 import           Control.Applicative ((*>), (<*))
 import           Language.AST
 import           Text.Parsec
 import           Text.Parsec.String  (Parser)
 import qualified Text.Parsec.Token   as T
+
+word :: Parser String
+word = many1 letter
+
+-- Properties
 
 parseRequired :: Parser PropertyKind
 parseRequired = string "required" >> return Required
@@ -18,8 +23,6 @@ parseRepeated = string "repeated" >> return Repeated
 
 parsePropertyKind :: Parser PropertyKind
 parsePropertyKind = try parseRequired <|> parseOptional <|> parseRepeated
-
--- Property Types
 
 parseIntType :: Parser PropertyType
 parseIntType = string "integer" >> return Integer
@@ -34,9 +37,7 @@ parseBooleanType :: Parser PropertyType
 parseBooleanType = string "boolean" >> return Boolean
 
 parseRef :: Parser PropertyType
-parseRef = do
-    ref <- word
-    return $ Ref ref
+parseRef = word >>= (\w -> return $ Ref w)
 
 parsePropertyType :: Parser PropertyType
 parsePropertyType =
@@ -46,34 +47,24 @@ parsePropertyType =
   parseBooleanType <|>
   parseRef
 
--- Words
-word :: Parser String
-word = many1 letter
-
 -- Properties
 parseProperty :: Parser Property
 parseProperty = do
-   propertyKind <- parsePropertyKind
+   propertyKind <- spaces *> parsePropertyKind
    _ <- spaces
    propertyType <- parsePropertyType
    _ <- spaces
    propertyName <- word
-   _ <- string ";"
+   _ <- spaces *> string ";"
    return $ Property propertyKind propertyType propertyName
 
-go :: Parser Property -> String -> Maybe Property
+parsePropertyLines :: Parser [Property]
+parsePropertyLines = parseProperty `sepBy` newline
+
+go :: Parser [Property] -> String -> Maybe [Property]
 go p s = case parse p "<stdin>" s of
     Left e  -> Nothing
     Right v -> Just v
 
 parseExpr :: String -> Either ParseError PropertyKind
 parseExpr s = parse parsePropertyKind "<stdin>" s
-
-parseFile :: FilePath -> IO String
-parseFile f = do
-   contents <- readFile f
-   return contents
-
--- go = parseFile "user.prototype"
-
-
