@@ -1,7 +1,11 @@
 # Prototype
 
-Prototype is a sketch for a SIMPLE polyglot format for defining and generating models for
+Prototype is a sketch for a simple polyglot format for defining and generating models for
 services. It uses a very similar (but more restrictive) syntax to Google protocol buffers.
+
+## Motivation
+
+I got fed up with difficult schemas for modeling domain objects across many languages (Swagger etc). This is an attempt at defining a stricter domain object modelling language.
 
 Let's define our data models
 
