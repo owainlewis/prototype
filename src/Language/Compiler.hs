@@ -1,7 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Language.Compiler where
 
-parseFile :: FilePath -> IO String
+import           Language.AST    (Entity (..))
+import qualified Language.Parser as Parser
+import           Text.Parsec     (ParseError)
+
+-- Read a .prototype file and extract a list of entities
+--
+parseFile :: FilePath -> IO (Either ParseError [Entity])
 parseFile f = do
    contents <- readFile f
-   return contents
+   return $ Parser.parseExpr contents

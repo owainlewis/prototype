@@ -4,10 +4,6 @@ entity Card {
 }
 
 entity User {
-  optional  int64   id;
-  required  string  name;
-  required  string  email;
-  required  int32   age;
-  required  boolean active;
-  repeated  Card   cards;
+  required integer id;
+  repeated Card cards;
 }

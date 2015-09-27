@@ -1,5 +1,20 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Language.Parser where
+-----------------------------------------------------------------------------
+-- |
+-- Module      :  Language.Parser
+-- Copyright   :  2015 Owain Lewis
+-- License     :  public domain
+
+-- Maintainer  :  owain@owainlewis.com
+-- Stability   :  experimental
+-- Portability :  portable
+
+-- Prototype language parser
+--
+-----------------------------------------------------------------------------
+module Language.Parser
+  ( parseExpr
+  ) where
 
 import           Control.Applicative ((*>), (<*))
 import           Language.AST
@@ -9,6 +24,14 @@ import qualified Text.Parsec.Token   as T
 
 word :: Parser String
 word = many1 letter
+
+lexme p = spaces *> p <* spaces
+
+braces p = do
+    _ <- lexme $ string "{"
+    r <- p
+    _ <- lexme $ string "}"
+    return r
 
 -- Properties
 
@@ -41,30 +64,30 @@ parseRef = word >>= (\w -> return $ Ref w)
 
 parsePropertyType :: Parser PropertyType
 parsePropertyType =
-  parseIntType     <|>
-  parseFloatType   <|>
-  parseStringType  <|>
-  parseBooleanType <|>
-  parseRef
+    parseIntType     <|>
+    parseFloatType   <|>
+    parseStringType  <|>
+    parseBooleanType <|>
+    parseRef
 
 -- Properties
 parseProperty :: Parser Property
 parseProperty = do
-   propertyKind <- spaces *> parsePropertyKind
-   _ <- spaces
-   propertyType <- parsePropertyType
-   _ <- spaces
-   propertyName <- word
-   _ <- spaces *> string ";"
-   return $ Property propertyKind propertyType propertyName
+     propertyKind <- spaces *> parsePropertyKind
+     propertyType <- lexme parsePropertyType
+     propertyName <- word
+     _ <-  lexme $ string ";"
+     return $ Property propertyKind propertyType propertyName
 
 parsePropertyLines :: Parser [Property]
-parsePropertyLines = parseProperty `sepBy` newline
+parsePropertyLines = many parseProperty
 
-go :: Parser [Property] -> String -> Maybe [Property]
-go p s = case parse p "<stdin>" s of
-    Left e  -> Nothing
-    Right v -> Just v
+parseEntity :: Parser Entity
+parseEntity = do
+    _          <- string "entity" <* spaces
+    name       <- word <* spaces
+    properties <- braces $ lexme parsePropertyLines
+    return $ Entity name properties
 
-parseExpr :: String -> Either ParseError PropertyKind
-parseExpr s = parse parsePropertyKind "<stdin>" s
+parseExpr :: String -> Either ParseError [Entity]
+parseExpr s = parse (many parseEntity) "<stdin>" s
