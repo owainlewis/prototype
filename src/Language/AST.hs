@@ -1,10 +1,5 @@
 module Language.AST where
 
-data Entity = Entity {
-    entityName       :: String
-  , entityProperties :: [Property]
-} deriving ( Show )
-
 data PropertyKind = Optional
                   | Required
                   | Repeated
@@ -23,11 +18,9 @@ data Property = Property {
   , propertyName :: String
 } deriving ( Eq, Ord, Show )
 
--- Examples
-
-card = Entity "Card" [ Property Required String "pan" ]
-
-user = Entity "User" [ Property Required String "name"
-                     , Property Repeated (Ref "Card") "cards"
-                     ]
-
+-- An entity representing some kind of domain object / model 
+--
+data Entity = Entity {
+    entityName       :: String
+  , entityProperties :: [Property]
+} deriving ( Eq, Ord, Show )
