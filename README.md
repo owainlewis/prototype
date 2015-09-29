@@ -23,7 +23,7 @@ type User {
   required  string  email;
   required  int32   age;
   required  boolean active;
-  repeated  Card   cards;
+  repeated  Card    cards;
 }
 ```
 
