@@ -31,4 +31,3 @@ main = do
           Just r -> LBS.writeFile "data.json" r
           Nothing -> putStrLn "Failed to parse file"
       _ -> putStrLn "Use: ./run file.prototype"
-
