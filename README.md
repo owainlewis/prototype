@@ -17,6 +17,18 @@ type Card {
   optional string nickname;
 }
 
+enum Department {
+  HR
+  Admin
+  Engineering
+}
+
+type Employee {
+  required string first;
+  required string last;
+  required Department department;
+}
+
 type User {
   optional  int64   id;
   required  string  name;

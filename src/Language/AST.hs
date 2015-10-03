@@ -34,10 +34,20 @@ instance ToJSON Property
 -- An entity representing some kind of domain object / model
 --
 data Entity = Entity {
-    name       :: String
-  , properties :: [Property]
+    entityName       :: String
+  , entityProperties :: [Property]
 } deriving ( Eq, Ord, Show, Generic )
 
 instance FromJSON Entity
 instance ToJSON Entity
+
+-- Enumerations
+--
+data Enumeration = Enumeration {
+    enumName   :: String
+  , enumValues :: [String]
+} deriving ( Eq, Ord, Show, Generic)
+
+instance FromJSON Enumeration
+instance ToJSON Enumeration
 

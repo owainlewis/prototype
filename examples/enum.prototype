@@ -1,0 +1,5 @@
+enum Department {
+  Foo
+  Bar
+  Baz
+}

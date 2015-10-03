@@ -90,5 +90,12 @@ parseEntity = do
     properties <- braces $ lexme parsePropertyLines
     return $ Entity name properties
 
-parseExpr :: String -> Either ParseError [Entity]
-parseExpr s = parse (many parseEntity) "<stdin>" s
+parseEnum :: Parser Enumeration
+parseEnum = do
+    _ <- string "enum" <* spaces
+    name       <- word <* spaces
+    values     <- braces $ many (lexme word)
+    return $ Enumeration name values
+
+parseExpr :: String -> Either ParseError [Enumeration]
+parseExpr s = parse (many parseEnum) "<stdin>" s
