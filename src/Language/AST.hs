@@ -4,6 +4,8 @@ module Language.AST where
 import           Data.Aeson   (FromJSON, ToJSON)
 import           GHC.Generics
 
+----------------------------------------------
+
 data PropertyKind = Optional
                   | Required
                   | Repeated
@@ -50,4 +52,3 @@ data Enumeration = Enumeration {
 
 instance FromJSON Enumeration
 instance ToJSON Enumeration
-
