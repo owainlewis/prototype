@@ -25,15 +25,15 @@ import qualified Text.Parsec.Token   as T
 word :: Parser String
 word = many1 letter
 
+lexme :: Parser a -> Parser a
 lexme p = spaces *> p <* spaces
 
+braces :: Parser a -> Parser a
 braces p = do
     _ <- lexme $ string "{"
     r <- p
     _ <- lexme $ string "}"
     return r
-
--- Properties
 
 parseRequired :: Parser PropertyKind
 parseRequired = string "required" >> return Required
@@ -97,5 +97,5 @@ parseEnum = do
     values     <- braces $ many (lexme word)
     return $ Enumeration name values
 
-parseExpr :: String -> Either ParseError [Enumeration]
-parseExpr s = parse (many parseEnum) "<stdin>" s
+parseExpr :: String -> Either ParseError [Entity]
+parseExpr s = parse (many parseEntity) "<stdin>" s
