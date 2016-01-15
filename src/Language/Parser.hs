@@ -10,7 +10,6 @@
 -- Portability :  portable
 
 -- Prototype language parser
---
 -----------------------------------------------------------------------------
 module Language.Parser
   ( parseExpr
