@@ -71,7 +71,6 @@ parsePropertyType =
     parseBooleanType <|>
     parseRef
 
--- Properties
 parseProperty :: Parser Property
 parseProperty = do
      propertyKind <- spaces *> parsePropertyKind
