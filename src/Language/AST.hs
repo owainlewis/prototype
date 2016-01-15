@@ -31,8 +31,6 @@ data Property = Property {
 instance FromJSON Property
 instance ToJSON Property
 
--- An entity representing some kind of domain object / model
---
 data Entity = Entity {
     entityName       :: String
   , entityProperties :: [Property]
@@ -41,8 +39,6 @@ data Entity = Entity {
 instance FromJSON Entity
 instance ToJSON Entity
 
--- Enumerations
---
 data Enumeration = Enumeration {
     enumName   :: String
   , enumValues :: [String]
