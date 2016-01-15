@@ -1,5 +1,7 @@
 # Prototype
 
+Prototype is a tool for auto generating domain models. The idea is to generate domain models in multiple languages (Scala, Java, Ruby, Python) from a single typed schema.
+
 ## Status (Alpha) Compiler is working
 
 Prototype is a sketch for a simple polyglot format for defining and generating models for
